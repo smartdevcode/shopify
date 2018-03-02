@@ -10,7 +10,7 @@ The package can be installed by adding `shopify` to your list of dependencies in
 
 ```elixir
 def deps do
-  [{:shopify, "~> 0.1.6"}]
+  [{:shopify, "~> 0.1.7"}]
 end
 ```
 
@@ -20,7 +20,7 @@ The Shopify API can be accessed in two ways - either with private apps via basic
 
 ### Private Apps
 
-Once you have a valid API key and password, setup your `config/confix.exs`.
+Once you have a valid API key and password, setup your `config/config.exs`.
 
 ```elixir
 config :shopify, [
@@ -44,7 +44,7 @@ Shopify.session("my-shop-name", "my-api-key", "my-password")
 
 ### OAuth Apps
 
-Once you have a shopify app client ID and secret, setup your `config/confix.exs`.
+Once you have a shopify app client ID and secret, setup your `config/config.exs`.
 
 ```elixir
 config :shopify, [
@@ -195,6 +195,11 @@ with a single struct, or list of structs of the resource or resources requested.
 - UsageCharge (find, all, create)
 - Variant
 - Webhook (find, all, create, update, delete, count)
+
+## Contributors
+
+* Marcelo Oliveira - https://github.com/overallduka
+* Fabian Zitter - https://github.com/Ninigi
 
 Documentation is generated with [ExDoc](https://github.com/elixir-lang/ex_doc).
 They can be found at [https://hexdocs.pm/shopify](https://hexdocs.pm/shopify).

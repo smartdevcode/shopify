@@ -3,11 +3,7 @@ defmodule Shopify.Adapters.Mock do
 
   @behaviour Shopify.Adapters.Base
 
-  alias Shopify.{
-    Request,
-    Response,
-    Config
-  }
+  alias Shopify.{Request, Response}
 
   def get(request) do
     request
@@ -54,24 +50,12 @@ defmodule Shopify.Adapters.Mock do
   end
 
   def load_resource(%Request{path: path, body: nil}) do
-    Config.fixtures_path <> "/" <> path
+    Path.expand("../../../test/fixtures/#{path}", __DIR__)
       |> File.read
   end
 
   def load_resource(%Request{body: body}) do
-    case Poison.decode(body) do
-      {:ok, resource} -> resource |> put_id |> Poison.encode
-      {:error, _} -> {:error, nil}
-    end
-  end
-
-  defp put_id(resource) do
-    key = resource |> Map.keys |> List.first
-    resource
-      |> Map.values
-      |> List.first
-      |> Map.put_new("id", 1)
-      |> (fn parsed -> %{key => parsed} end).()
+    {:ok, body}
   end
 
   def authorize(request) do
@@ -90,6 +74,6 @@ defmodule Shopify.Adapters.Mock do
   end
 
   def oauth_auth(_) do
-
+    
   end
 end
