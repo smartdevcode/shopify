@@ -25,7 +25,6 @@ defmodule Shopify.Customer do
     :created_at,
     :default_address,
     :email,
-    :phone,
     :first_name,
     :id,
     :multipass_identifier,
