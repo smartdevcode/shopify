@@ -88,8 +88,7 @@ defmodule Shopify.Order do
     :contact_email,
     :device_id,
     :source_identifier,
-    :reference,
-    :transactions
+    :reference
   ]
 
   @doc false
