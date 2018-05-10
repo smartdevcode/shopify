@@ -3,8 +3,9 @@ defmodule Shopify.PageTest do
 
   alias Shopify.Page
 
+  @tag :asdf
   test "client can request a single page" do
-    assert {:ok, response} = Shopify.session() |> Page.find(1)
+    assert {:ok, response} = Shopify.session() |> Page.find(1, %{a: "a"})
     assert %Shopify.Response{} = response
     assert 200 == response.code
     fixture = Fixture.load("../test/fixtures/pages/1.json", "page", Page.empty_resource())
@@ -19,7 +20,7 @@ defmodule Shopify.PageTest do
     assert fixture == response.data
   end
 
-  test "client can request a page count" do
+  test "client can request a npage count" do
     assert {:ok, response} = Shopify.session() |> Page.count()
     assert %Shopify.Response{} = response
     assert 200 == response.code
@@ -27,7 +28,7 @@ defmodule Shopify.PageTest do
     assert fixture == response.data
   end
 
-  test "client can request to create a page" do
+  test "client can request to create an page" do
     fixture = Fixture.load("../test/fixtures/pages/1.json", "page", Page.empty_resource())
     assert {:ok, response} = Shopify.session() |> Page.create(fixture)
     assert %Shopify.Response{} = response
@@ -36,7 +37,7 @@ defmodule Shopify.PageTest do
     assert fixture == response.data
   end
 
-  test "client can request to update a page" do
+  test "client can request to update an page" do
     assert {:ok, response} = Shopify.session() |> Page.find(1)
     assert "Warranty information" == response.data.title
     update = %{response.data | title: "Update"}
@@ -44,7 +45,7 @@ defmodule Shopify.PageTest do
     assert "Update" == response.data.title
   end
 
-  test "client can request to delete a page" do
+  test "client can request to delete an page" do
     assert {:ok, response} = Shopify.session() |> Page.delete(1)
     assert %Shopify.Response{} = response
     assert 200 == response.code

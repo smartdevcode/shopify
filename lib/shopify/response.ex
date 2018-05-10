@@ -1,6 +1,8 @@
 defmodule Shopify.Response do
   @moduledoc false
 
+  @type t :: %__MODULE__{code: integer, data: map | list(map)}
+
   alias Shopify.Response
 
   defstruct [
@@ -16,7 +18,7 @@ defmodule Shopify.Response do
     {:error, %Response{code: code, data: error |> parse_json(body)}}
   end
 
-  defp parse_json(_res, body) when is_nil(body) or body == "" do
+  defp parse_json(res, body) when is_nil(body) or body == "" do
     nil
   end
 
