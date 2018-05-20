@@ -1,15 +1,6 @@
 defmodule Shopify.Request do
   @moduledoc false
 
-  @type t :: %__MODULE__{
-          full_url: String.t(),
-          path: String.t(),
-          resource: map,
-          body: String.t(),
-          headers: list,
-          query_params: map
-        }
-
   @headers [
     "Content-Type": "application/json",
     "Keep-Alive": "timeout=15, max=100",
@@ -17,12 +8,12 @@ defmodule Shopify.Request do
   ]
 
   defstruct [
+    :type,
     :full_url,
     :path,
     :resource,
     :body,
-    :headers,
-    :query_params
+    :headers
   ]
 
   def new(session, path, params \\ %{}, resource, body \\ nil) do
@@ -31,8 +22,7 @@ defmodule Shopify.Request do
       path: path,
       resource: resource,
       body: body,
-      headers: session |> build_headers,
-      query_params: params
+      headers: session |> build_headers
     }
   end
 
