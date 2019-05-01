@@ -1,4 +1,5 @@
 ExUnit.start()
+Application.ensure_all_started(:bypass)
 
 defmodule Fixture do
   def load(path, root, resource) do

@@ -53,13 +53,7 @@ defmodule Shopify.Request do
         :oauth -> session.shop_name
       end
 
-    api_version =
-      case session.api_version do
-        api_version when is_binary(api_version) -> "api/#{api_version}/"
-        _ -> nil
-      end
-
-    "https://#{shop_path}.myshopify.com/admin/#{api_version}#{path}"
+    "https://#{shop_path}.myshopify.com/admin/" <> path
   end
 
   defp add_query(full_url, params)

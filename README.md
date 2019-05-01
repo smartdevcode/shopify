@@ -110,7 +110,10 @@ session = Shopify.session("shop-name", "access-token")
 updated_product = %{product | title: "New Title"}
 {:ok, response} = session |> Shopify.Product.update(product.id, updated_product)
 
-# Create a resource
+# Update a resource without finding it
+{:ok, response} = session |> Shopify.Product.update(id, %{title: "New Title"})
+
+# Create a resource from the resource struct
 new_product = %Shopify.Product{
     title: "Fancy Shirt",
     body_html: "<strong>Good shirt!<\/strong>",
@@ -124,6 +127,20 @@ new_product = %Shopify.Product{
     }
 {:ok, response} = session |> Shopify.Product.create(new_product)
 
+# Create a resource from a simple map
+new_product_args = %{
+    title: "Fancy Shirt",
+    body_html: "<strong>Good shirt!<\/strong>",
+    vendor: "Fancy Vendor",
+    product_type: "shirt",
+    variants: [
+    	%{
+   		price: "10.00",
+    		sku: 123
+   	}]
+    }
+{:ok, response} = session |> Shopify.Product.create(new_product_args)
+
 # Count resources
 {:ok, %Shopify.Response{data: count}} = session |> Shopify.Product.count
 
@@ -135,26 +152,6 @@ new_product = %Shopify.Product{
 
 # Delete a resource
 {:ok, _} = session |> Shopify.Product.delete(id)
-```
-
-## API Versioning
-
-Shopify supports [API versioning](https://help.shopify.com/en/api/versioning). By
-default, if you dont specify an api version, your request defaults to the oldest
-supported stable version.
-
-You can specify a default version through application config.
-
-```elixir
-config :shopify, [
-  api_version: "2019-04"
-]
-```
-
-You can also set a specific version per session.
-
-```elixir
-Shopify.session("shop-name", "access-token") |> Shopify.Session.put_api_version("2019-04")
 ```
 
 ## Handling Responses
@@ -184,7 +181,7 @@ The `%Shopify.Response{}` struct contains two fields: code and data. Code is the
 status code that is returned from Shopify. A successful request will either set the data field
 with a single struct, or list of structs of the resource or resources requested.
 
-## Multipass 
+## Multipass
 
 The [Multipass](https://help.shopify.com/en/api/reference/plus/multipass) is available to Shopify Plus plans. It allows your non-Shopify site to be the source of truth for authentication and login. After your site has successfully authenticated a user, redirect their browser to Shopify using the special Multipass URL: this will upsert the customer data in Shopify and log them in.
 
@@ -227,7 +224,7 @@ config :shopify, [
 
 When using oauth, make sure the token passed is `test`, otherwise authentication will fail.
 
-```elixir
+```
 Shopify.session("my-shop.myshopify.com", "test")
 |> Product.all()
 ```
